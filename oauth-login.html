@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Login Prototype</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .login-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .google {
+            background-color: #DB4437;
+        }
+        .google:hover {
+            background-color: #C53929;
+        }
+        .facebook {
+            background-color: #4267B2;
+        }
+        .facebook:hover {
+            background-color: #365899;
+        }
+        .github {
+            background-color: #333;
+        }
+        .github:hover {
+            background-color: #242424;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #777;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        .divider::before {
+            margin-right: 10px;
+        }
+        .divider::after {
+            margin-left: 10px;
+        }
+        #user-info {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+            text-align: left;
+        }
+        #logout-btn {
+            background-color: #f44336;
+            display: none;
+        }
+        #logout-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome</h1>
+        <div id="login-container">
+            <p>Sign in to continue to our application</p>
+            <a href="#" class="login-btn google" onclick="simulateOAuth('google')">
+                Continue with Google
+            </a>
+            <a href="#" class="login-btn facebook" onclick="simulateOAuth('facebook')">
+                Continue with Facebook
+            </a>
+            <a href="#" class="login-btn github" onclick="simulateOAuth('github')">
+                Continue with GitHub
+            </a>
+            <div class="divider">or</div>
+            <p>This is a demonstration prototype. No actual OAuth authentication is performed.</p>
+        </div>
+        
+        <div id="user-info">
+            <h3>User Information</h3>
+            <p><strong>Provider:</strong> <span id="provider"></span></p>
+            <p><strong>User ID:</strong> <span id="user-id"></span></p>
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Access Token:</strong> <span id="access-token"></span></p>
+            <p><small>This is simulated data for demonstration purposes.</small></p>
+        </div>
+        
+        <a href="#" id="logout-btn" class="login-btn" onclick="logout()">
+            Logout
+        </a>
+    </div>
+
+    <script>
+        function simulateOAuth(provider) {
+            // In a real implementation, this would redirect to the OAuth provider
+            console.log(`Redirecting to ${provider} for authentication...`);
+            
+            // Simulate the OAuth flow with a short delay
+            setTimeout(() => {
+                // Simulate coming back from the OAuth provider with user data
+                const userData = generateMockUserData(provider);
+                showUserData(userData);
+            }, 1000);
+        }
+        
+        function generateMockUserData(provider) {
+            // Generate random ID to simulate unique users
+            const userId = Math.floor(Math.random() * 1000000).toString();
+            
+            // Mock data based on the provider
+            const mockNames = {
+                'google': 'John Doe',
+                'facebook': 'Jane Smith',
+                'github': 'Dev User'
+            };
+            
+            const mockEmails = {
+                'google': 'john.doe@gmail.com',
+                'facebook': 'jane.smith@example.com',
+                'github': 'dev.user@github.com'
+            };
+            
+            // Generate a mock OAuth token
+            const token = Array.from({length: 32}, () => 
+                Math.floor(Math.random() * 16).toString(16)).join('');
+                
+            return {
+                provider: provider,
+                userId: `${provider}_${userId}`,
+                name: mockNames[provider],
+                email: mockEmails[provider],
+                accessToken: token
+            };
+        }
+        
+        function showUserData(userData) {
+            // Show the user info container
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('user-info').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'block';
+            
+            // Populate user data
+            document.getElementById('provider').textContent = userData.provider;
+            document.getElementById('user-id').textContent = userData.userId;
+            document.getElementById('name').textContent = userData.name;
+            document.getElementById('email').textContent = userData.email;
+            document.getElementById('access-token').textContent = userData.accessToken;
+            
+            // In a real app, you would:
+            // 1. Store the token in localStorage or sessionStorage
+            // 2. Set up authorization headers for API requests
+            // 3. Fetch additional user data from your backend
+            
+            console.log('User authenticated:', userData);
+        }
+        
+        function logout() {
+            // In a real app, you would:
+            // 1. Clear tokens from storage
+            // 2. Notify your backend about the logout
+            // 3. Possibly redirect the user
+            
+            // Reset the UI
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('user-info').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'none';
+            
+            console.log('User logged out');
+        }
+    </script>
+</body>
+</html>
