@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @tkliegerman
 - 👀 I’m interested in product management, accessibility, SQL, DevOps, Azure, AWS, Postman, Fiddler, Looker, Tableau, PowerBi, and containerization.
-- 💞️ I love to collaborate on technical product management, especially IaaS, PaaS, and SaaS applications. 
+- 💞️ I love to collaborate on technical product management, especially AI/ML, IoT, IaaS, PaaS, and SaaS.  
 - 📫 How to reach me:  teresa.kliegerman@gmail.com
 
 <!---
